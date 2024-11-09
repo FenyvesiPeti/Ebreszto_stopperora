@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'header_widget.dart'; // Import the header widget
+import 'main.dart';
 
+
+//A stopperóra törzse. Egy szöveg ami a stopperórát mutatja, és egy lebegő gomb ami elindítja a stopperórát.
 class TimerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          HeaderWidget(), // Use the HeaderWidget at the top
+          //Használjuk a header widgetet
+          HeaderWidget(), 
           const Expanded(
             child: Center(
               child: Text(
@@ -22,12 +26,14 @@ class TimerPage extends StatelessWidget {
           ),
         ],
       ),
+      //Lebegő gomb ami elindítja a stopperórát
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your play functionality here
+          // Majd ide kód
           print('Play Button Pressed');
         },
-        child: Icon(Icons.play_arrow, size: 32), // "Play" icon
+        // "Play" ikon a gomb közepére
+        child: Icon(Icons.play_arrow, size: 32), 
         backgroundColor: Colors.green,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

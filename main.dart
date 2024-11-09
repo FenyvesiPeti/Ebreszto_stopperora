@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'header_widget.dart';
+import 'alarm_page.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+//Beállítjuk az alkalmazásunkat a MaterialApp widgettel, majd a főoldalát az AlarmClockPage-re állítjuk.
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,12 +20,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//Itt az ébresztő törzse. Ha nincs még felvéve ébresztő, akkor egy szürke szöveget jelenítünk meg, hogy nincs még felvéve ébresztő. 
+//Ha van felvéve ébresztő, akkor azokat jelenítjük meg.
 class AlarmClockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
   body: Column(
     children: [
+      //Hazsnáljuk a header widgetet
       HeaderWidget(),
       const Expanded(
         child: Center(
@@ -35,12 +40,14 @@ class AlarmClockPage extends StatelessWidget {
       ),
     ],
   ),
+  //Egy lebegő gomb amivel hozzátudunk adni egy új ébresztő időpontot.
   floatingActionButton: FloatingActionButton(
     onPressed: () {
-      // Add your alarm-setting functionality here
+      // Majd ide kell írni a kódot
       print('Add Alarm Button Pressed');
     },
-    child: Icon(Icons.add, size: 32), // "+" icon in the center
+    // "+" ikon a gomb közepére
+    child: Icon(Icons.add, size: 32), 
     backgroundColor: Colors.blue,
   ),
   floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
