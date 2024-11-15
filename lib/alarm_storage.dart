@@ -1,47 +1,47 @@
-/*import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+/*
+Nem működik semmi itt mentenénk el az ébresztőket
+
 import 'package:flutter/material.dart';
-import 'main.dart';  // Az Alarm osztályt importálni kell, ha másik fájlban van
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
+class Alarm {
+  TimeOfDay time;
+  String label;
+  bool isEnabled;
 
-//Ez a kóddal fogjuk majd elmenti az ébresző adatokat JSON fájlban. Még NEM működik, csak a kód van itt.
-//Most jelenleg az van hogyha kilépnk a programból vagy átmegyünk a stopperóra oldalra akkor minden adat elveszik :)
+  Alarm(this.time, this.label, {this.isEnabled = true});
+
+  Map<String, dynamic> toJson() => {
+        'hour': time.hour,
+        'minute': time.minute,
+        'label': label,
+        'isEnabled': isEnabled,
+      };
+
+  factory Alarm.fromJson(Map<String, dynamic> json) {
+    return Alarm(
+      TimeOfDay(hour: json['hour'], minute: json['minute']),
+      json['label'],
+      isEnabled: json['isEnabled'],
+    );
+  }
+}
+
 class AlarmStorage {
-  // Alarms betöltése SharedPreferences-ből
-  static Future<List<Alarm>> loadAlarms() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? alarmList = prefs.getStringList('alarms');
-    
-    if (alarmList != null) {
-      // Ha van mentett lista, akkor visszatérítjük az Alarm objektumokat
-      return alarmList.map((alarmStr) {
-        final alarmData = jsonDecode(alarmStr);
-        return Alarm(
-          TimeOfDay(
-            hour: alarmData['time']['hour'],
-            minute: alarmData['time']['minute'],
-          ),
-          alarmData['label'],
-          isEnabled: alarmData['isEnabled'],
-        );
-      }).toList();
-    }
-    return []; // Ha nincs mentett adat, üres listát adunk vissza
+  static Future<void> saveAlarms(List<Alarm> alarms) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String alarmsString = jsonEncode(alarms.map((alarm) => alarm.toJson()).toList());
+    await prefs.setString('alarms', alarmsString);
   }
 
-  // Alarms mentése SharedPreferences-be
-  static Future<void> saveAlarms(List<Alarm> alarms) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    
-    List<String> alarmList = alarms.map((alarm) {
-      // Alarm objektumokat JSON formátumba alakítjuk, hogy tárolható legyen
-      return jsonEncode({
-        'time': {'hour': alarm.time.hour, 'minute': alarm.time.minute},
-        'label': alarm.label,
-        'isEnabled': alarm.isEnabled,
-      });
-    }).toList();
-    
-    await prefs.setStringList('alarms', alarmList);  // Mentjük az adatokat
+  static Future<List<Alarm>> loadAlarms() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? alarmsString = prefs.getString('alarms');
+    if (alarmsString != null) {
+      final List<dynamic> alarmsJson = jsonDecode(alarmsString);
+      return alarmsJson.map((json) => Alarm.fromJson(json)).toList();
+    }
+    return [];
   }
 }*/

@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 //import 'dart:convert';
 
+//Jelenlegi hiba: Amikor oldalt váltunk vagy kilépünk a programból akkor az ébresztők elvesznek.
+//Ezt meglehetne oldani azzal, hogy az ébresztőket elmentjük egy JSON fájlba és betöltjük a program indulásakor.
+//Viszont amikor ezt megpróbáltam akkor teljesen rossz lett minden és újra kellett telepítenem az eumulátort.
+
+
 import 'header_widget.dart';
 import 'alarm_page.dart';
 import 'alarm_storage.dart';
@@ -148,7 +153,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
             title: const Text('Adjon meg egy címkét'),
             content: TextField(
               controller: labelController,
-              decoration: InputDecoration(labelText: 'Címke'),
+              decoration: const InputDecoration(labelText: 'Címke'),
             ),
             actions: [
               TextButton(
@@ -205,20 +210,20 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
                     });
                   }
                 },
-                child: Text("Időpont szerkesztése"),
+                child: const Text("Időpont szerkesztése"),
               ),
             ],
           ),
           //Megse és mentés gombok
           actions: [
             TextButton(
-              child: Text('Mégse'),
+              child: const Text('Mégse'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Mentés'),
+              child: const Text('Mentés'),
               onPressed: () {
                 setState(() {
                   alarm.label = labelController.text;
@@ -340,7 +345,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
       ),
 
       //TESZT gomb, amivel tesztelhető az ébresztő ablak
-      
+      /*
       const SizedBox(height: 10),
       FloatingActionButton(
         onPressed: () {
@@ -350,12 +355,12 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
         },
         child: Icon(Icons.alarm, size: 32),
         backgroundColor: Colors.red,
-      ),
+      ),*/
     
       
     ],
   ),
-      //Ezért vannak a lebegő gombok az oldal alján és középen 
+      //Ezért vannak a lebegő gombo(k) az oldal alján és középen 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
