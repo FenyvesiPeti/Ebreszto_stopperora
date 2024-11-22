@@ -1,18 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-//Ez a adatok mentére kell majd de még nem működik
-//import 'package:shared_preferences/shared_preferences.dart';
-//import 'dart:convert';
-
 //Jelenlegi hiba: Amikor oldalt váltunk vagy kilépünk a programból akkor az ébresztők elvesznek.
-//Ezt meglehetne oldani azzal, hogy az ébresztőket elmentjük egy JSON fájlba és betöltjük a program indulásakor.
-//Viszont amikor ezt megpróbáltam akkor teljesen rossz lett minden és újra kellett telepítenem az eumulátort.
-
+//Próbáltam SharedPreferences-el, Fájlba mentéssel/olvasással, adatbázissal egyik se működött.
 
 import 'header_widget.dart';
-import 'alarm_page.dart';
-import 'alarm_storage.dart';
+import 'timer_page.dart';
 
 void main() {
   runApp(MyApp());

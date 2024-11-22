@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
-import 'alarm_page.dart';
+import 'timer_page.dart';
 
 //A header widget, ami a felső navigációs sávot tartalmazza.
 //Felépítése: 1 sor, benne 2 oszlop. Az első oszlopban az ébresztő ikonja és szövege, a másodikban a stopperóra ikonja és szövege.
