@@ -1,11 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:idozito_ebreszto_beadando/CED_alarm/edit_alarm.dart';
 
 //Jelenlegi hiba: Amikor oldalt váltunk vagy kilépünk a programból akkor az ébresztők elvesznek.
 //Próbáltam SharedPreferences-el, Fájlba mentéssel/olvasással, adatbázissal egyik se működött.
 
 import 'header_widget.dart';
 import 'timer_page.dart';
+import 'CED_alarm/create_alarm.dart';
+import 'CED_alarm/edit_alarm.dart';
+import 'CED_alarm/delete_alarm.dart';
+
+//showalarmsDialog metódust, checkAlarm metódust, és maga az oldal megjelenítést nem tettem át másik fájlba mert 
+// úgy nem működött... Szóval ezeket itt hagytam.
 
 void main() {
   runApp(MyApp());
@@ -125,118 +132,19 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
   );
 }
 
-  //Aszinkron metódus ami a risztás hozzáadását végzi
-  void _addNewAlarm() async {
-    //Időválasztó párbeszédablak, ahol a felhasználó kiválaszthatja az ébresztő idejét
-    //"await" kulcszó megvárja ameddig a felhasználó választ egy időpontot, ha null értékkel tér vissza akkor a felhasználó nem választott időpontot
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    //Ha nem null akkor:
-    if (pickedTime != null) {
-      TextEditingController labelController = TextEditingController();
-
-      //Címke megadás + mégse és mentés gombok
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Adjon meg egy címkét'),
-            content: TextField(
-              controller: labelController,
-              decoration: const InputDecoration(labelText: 'Címke'),
-            ),
-            actions: [
-              TextButton(
-                child: const Text('Mégse'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('Mentés'),
-                onPressed: () {
-                  setState(() {
-                    alarms.add(Alarm(pickedTime, labelController.text));
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
+  //Metódus az új ébresztő hozzáadására
+  void _addNewAlarm() {
+   addNewAlarm(context, alarms, setState);
   }
 
   //Metódus az ébresztő(k) szerkesztésére
   void _editAlarm(Alarm alarm) {
-    TextEditingController labelController = TextEditingController(text: alarm.label);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          //Oszlop elrendezés
-          title: const Text('Ébresztő szerkesztése'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: labelController,
-                decoration: const InputDecoration(labelText: 'Címke'),
-              ),
-              const SizedBox(height: 20),
-              // Időválasztó gomb
-              TextButton(
-                onPressed: () async {
-                  final TimeOfDay? newTime = await showTimePicker(
-                    context: context,
-                    initialTime: alarm.time,
-                  );
-                  // Ha a felhasználó kiválasztott egy új időpontot, akkor frissítjük az ébresztő idejét
-                  if (newTime != null) {
-                    setState(() {
-                      alarm.time = newTime;
-                    });
-                  }
-                },
-                child: const Text("Időpont szerkesztése"),
-              ),
-            ],
-          ),
-          //Megse és mentés gombok
-          actions: [
-            TextButton(
-              child: const Text('Mégse'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Mentés'),
-              onPressed: () {
-                setState(() {
-                  alarm.label = labelController.text;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    editAlarm(context, alarm, setState);
   }
 
   //MEtódus az ébresztők törlésére
   void _deleteAlarm(Alarm alarm) {
-    //A setState metódus segítségével frissítjük az ébresztők listáját
-    setState(() {
-      //Az ébresztő törlése a listából
-      alarms.remove(alarm);
-    });
+    deleteAlarm(alarm, alarms, setState);
   }
 
   @override
