@@ -15,10 +15,10 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  Color _alarmIconColor = Colors.grey;
-  Color _alarmTextColor = Colors.grey;
-  Color _timerIconColor = Colors.grey;
-  Color _timerTextColor = Colors.grey;
+  Color _alarmIconColor = Colors.blue;
+  Color _alarmTextColor = Colors.blue;
+  Color _timerIconColor = Colors.blue;
+  Color _timerTextColor = Colors.blue;
   String _selectedType = '';
 
   void _changeColor(String type) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:idozito_ebreszto_beadando/CED_alarm/edit_alarm.dart';
+//import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 
 //Jelenlegi hiba: Amikor oldalt váltunk vagy kilépünk a programból akkor az ébresztők elvesznek.
 //Próbáltam SharedPreferences-el, Fájlba mentéssel/olvasással, adatbázissal egyik se működött.
@@ -49,6 +50,37 @@ class AlarmClockPage extends StatefulWidget {
   _AlarmClockPageState createState() => _AlarmClockPageState();
 }
 
+//Osztály a hang lejátszására
+class AlarmSoundManager {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  /// Metódus a hang lejátszására
+  Future<void> playRingtone() async {
+    try {
+      // Helyi fájl beállítása
+      await _audioPlayer.setAsset('assets/ringtone.mp3');
+      await _audioPlayer.play();
+    } catch (e) {
+      print("Hiba a hang lejátszása közben: $e");
+    }
+  }
+
+  /// Metódus a hang leállítására
+  Future<void> stopRingtone() async {
+    try {
+      await _audioPlayer.stop();
+    } catch (e) {
+      print("Hiba a hang leállítása közben: $e");
+    }
+  }
+
+  /// Felszabadítja az erőforrásokat
+  void dispose() {
+    _audioPlayer.dispose();
+  }
+}
+final alarmSoundManager = AlarmSoundManager();
+
 //Az ébresztő oldal törzse, itt lehet új ébresztőket hozzáadni, szerkeszteni és törölni
 class _AlarmClockPageState extends State<AlarmClockPage> {
   //Lista az ébresztők tárolására
@@ -90,6 +122,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
   showDialog(
     context: context,
     builder: (BuildContext context) {
+    alarmSoundManager.playRingtone();
       return AlertDialog(
         title: const Text('Ébresztő!'),
         content: Column(
@@ -116,6 +149,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
                 ));
               });
               // Bezárjuk a modal ablakot
+              alarmSoundManager.stopRingtone();
               Navigator.of(context).pop();  
             },
           ),
@@ -123,6 +157,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
           TextButton(
             child: const Text('Rendben'),
             onPressed: () {
+              alarmSoundManager.stopRingtone();
               Navigator.of(context).pop();
             },
           ),
@@ -246,7 +281,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
       ),
 
       //TESZT gomb, amivel tesztelhető az ébresztő ablak
-      /*
+      
       const SizedBox(height: 10),
       FloatingActionButton(
         onPressed: () {
@@ -256,7 +291,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
         },
         child: Icon(Icons.alarm, size: 32),
         backgroundColor: Colors.red,
-      ),*/
+      ),
     
       
     ],
