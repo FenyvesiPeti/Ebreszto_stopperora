@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 //import 'package:audioplayers/audioplayers.dart';
-import 'package:just_audio/just_audio.dart';
+//import 'package:just_audio/just_audio.dart';
 
 //Jelenlegi hiba: Amikor oldalt váltunk vagy kilépünk a programból akkor az ébresztők elvesznek.
 //Próbáltam SharedPreferences-el, Fájlba mentéssel/olvasással, adatbázissal egyik se működött.
@@ -51,7 +51,7 @@ class AlarmClockPage extends StatefulWidget {
 }
 
 //Osztály a hang lejátszására
-class AlarmSoundManager {
+/*class AlarmSoundManager {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   /// Metódus a hang lejátszására
@@ -80,7 +80,7 @@ class AlarmSoundManager {
   }
 }
 final alarmSoundManager = AlarmSoundManager();
-
+*/
 //Az ébresztő oldal törzse, itt lehet új ébresztőket hozzáadni, szerkeszteni és törölni
 class _AlarmClockPageState extends State<AlarmClockPage> {
   //Lista az ébresztők tárolására
@@ -122,7 +122,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-    alarmSoundManager.playRingtone();
+    //alarmSoundManager.playRingtone();
       return AlertDialog(
         title: const Text('Ébresztő!'),
         content: Column(
@@ -149,7 +149,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
                 ));
               });
               // Bezárjuk a modal ablakot
-              alarmSoundManager.stopRingtone();
+              //alarmSoundManager.stopRingtone();
               Navigator.of(context).pop();  
             },
           ),
@@ -157,7 +157,7 @@ class _AlarmClockPageState extends State<AlarmClockPage> {
           TextButton(
             child: const Text('Rendben'),
             onPressed: () {
-              alarmSoundManager.stopRingtone();
+             // alarmSoundManager.stopRingtone();
               Navigator.of(context).pop();
             },
           ),
